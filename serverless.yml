@@ -1,0 +1,24 @@
+# serverless.yml
+service: lambda
+provider:
+  name: aws
+  region: us-east-2
+  runtime: nodejs14.x
+functions:
+  unzip-to-s3:
+    # this is formatted as <FILENAME>.<HANDLER>
+    # handler: index.handler
+    handler: dist/index.handler
+    events:
+      - http: 
+          path: /
+          method: put
+          data: '{"bucket": "zip-unzip-bucket", "fileKey": "property.zip")'
+      # - http:
+      #     path: /
+      #     method: post
+      #     cors: true
+      # - http:
+      #     path: /
+      #     method: get
+      #     cors: true

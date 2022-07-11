@@ -1,0 +1,27 @@
+{
+  "main": "index.js",
+  "author": "Constantine K",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1167.0",
+    "aws-serverless-express": "^3.4.0",
+    "dotenv": "^16.0.1",
+    "esbuild": "^0.14.48",
+    "yauzl": "^2.10.0"
+  },
+  "devDependencies": {
+    "@types/mime-types": "^2.1.1",
+    "@types/node": "^18.0.0",
+    "@types/yauzl": "^2.10.0",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.7.4"
+  },
+  "scripts": {
+    "start": "ts-node ./unzipFileS3.ts",
+    "prebuild": "rm -rf dist",
+    "build": "esbuild ./unzipFileS3.ts --bundle --minify --sourcemap --platform=node --external:aws-sdk --target=es2019 --outfile=dist/index.js",
+    "postbuild": "cp dist/index.js . && cp ./aws-config.json dist/ && cd dist && zip -r index.zip index.js* aws-config.json"
+  }
+}
